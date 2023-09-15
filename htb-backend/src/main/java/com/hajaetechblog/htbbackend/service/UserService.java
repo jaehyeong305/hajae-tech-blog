@@ -21,10 +21,6 @@ public class UserService {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }
-    
-    public User findUserByFullName(String fullName) {
-        return userRepository.findByFullName(fullName);
-    }
 
     public User createUser(User user) {
         String encodedPassword = passwordEncoder.encode(user.getPassword());
