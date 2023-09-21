@@ -1,0 +1,30 @@
+@import 'src/styles/vars/colors';
+
+.navigatorWrapper {
+    position: fixed;
+    right: 1%;
+    top: 15vh;
+
+    z-index: 999;
+}
+
+ul.navigator {
+    padding: 3px 0;
+    background-color: rgba($very-light-gray, 0.8);
+    border-radius: 5px;
+
+    list-style: none;
+
+    > li {
+        padding: 10px;
+        border-bottom: solid 1px $light-gray;
+        line-height: 1;
+
+        &:last-child {
+            border-bottom: 0;
+        }
+
+        text-align: center;
+        color: $gray;
+    }
+}

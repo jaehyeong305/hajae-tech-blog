@@ -1,10 +1,12 @@
-import Image from 'next/image'
-import styles from './page.module.css'
+import styles from './page.module.scss'
+import Main from './components/main/Main';
 
-export default async function Home() {
+const Home: React.FC = () => {  
   return (
     <main className={styles.main}>
-        <h1>hello world</h1>
+        <Main/>
     </main>
   )
 }
+
+export default Home;

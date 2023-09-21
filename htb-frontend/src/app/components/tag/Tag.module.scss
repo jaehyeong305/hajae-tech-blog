@@ -1,0 +1,31 @@
+@import 'src/styles/vars/colors';
+
+.tagWrapper {
+    display: inline-block;
+    border: solid 1px $l-primary;
+    border-radius: 15px;
+
+    color: $l-primary-gray;
+
+    &.m {
+        margin-right: 20px;
+        margin-bottom: 10px;
+        padding: 5px 15px;
+
+        font-size: 14px;
+    }
+
+    &.s {
+        margin-right: 10px;
+        margin-bottom: 5px;
+        padding: 4px 10px;
+
+        font-size: 12px;
+    }
+
+    &.active {
+        background-color: $background-blue;
+        border-color: $background-blue;
+        color: $tmp-yellow;
+    }
+}
