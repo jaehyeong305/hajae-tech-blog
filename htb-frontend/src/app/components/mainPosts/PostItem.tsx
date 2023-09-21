@@ -19,8 +19,6 @@ const PostItem: React.FC = () => {
                         <Icon iconName='chat_bubble' iconCustomStyle={{fontSize: '18px'}}/>
                         <span>0</span>
                     </div>
-
-
                 </div>
                 <div className={styles.itemTags}>
                     <Tag tagName="Next.js" />

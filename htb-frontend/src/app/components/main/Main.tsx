@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import styles from './Main.module.scss'
 import MainPosts from '../mainPosts/MainPosts';
+import Navigator from '../navigator/Navigator';
 
 const Main: React.FC = () => {
     const [scrollY, setScrollY] = useState(0);
@@ -32,6 +33,7 @@ const Main: React.FC = () => {
             <div className={styles.mainBanner}
                 style={{ backgroundImage: `url("/images/main-bgi6.jpg")`, transform: `translateY(${mainBannerPosition}px)` }}>
             </div>
+            <Navigator/>
             <div className={styles.mainPageWrapper} style={{ transform: `translateY(${mainPagePosition}px)` }}>
                 <MainPosts/>
             </div>
