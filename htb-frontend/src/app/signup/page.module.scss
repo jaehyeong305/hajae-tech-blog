@@ -1,0 +1,32 @@
+@import 'src/styles/vars/colors';
+
+.signUpPageWrapper {
+    padding-top: 5vh;
+    width: 100vw;
+    height: 95vh;
+
+    background-color: $background-blue;
+    background-size: cover;
+}
+
+.signUpWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 30vw;
+    padding-top: 120px;
+    width: 40vw;
+    height: calc(80vh - 120px);
+
+    background-color: $very-light-gray;
+    border-radius: 5px;
+    box-shadow: 3px 3px 5px  $gray;
+}
+
+.signUpTitle {
+    margin-bottom: 20px;
+
+    font-size: 36px;
+    font-weight: 700;
+    color: $l-primary-dark;
+}
