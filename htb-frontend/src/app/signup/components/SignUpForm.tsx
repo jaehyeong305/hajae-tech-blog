@@ -1,6 +1,6 @@
 'use client'
 
-import React, { ChangeEvent } from "react";
+import React from "react";
 import styles from './SignUpForm.module.scss';
 import { InputWrapper } from "@/app/components/customInput/CustomInput";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -29,7 +29,6 @@ const SignUpForm: React.FC = () => {
     }
     
     const handleBlurValidation = async (fieldName: keyof FormValues) => {
-        // React Hook Form의 trigger 함수를 사용하여 특정 필드의 바리데이션을 수동으로 체크
         await trigger(fieldName);
     }
 
