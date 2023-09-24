@@ -1,0 +1,65 @@
+@import 'src/styles/vars/colors';
+
+.inputField {
+    position: relative;
+    margin-top: 30px;
+    width: 25vw;
+}
+
+
+/**************INPUT STYLES*************/
+.customInput:focus-visible {
+    outline: none;
+}
+
+.customInput::placeholder {
+    color: $l-primary-gray;
+}
+
+.customInput {
+    padding-left: 50px;
+    width: calc(100% - 50px);
+    height: 40px;
+
+    border: solid 2px $l-primary-gray;
+    border-radius: 10px;
+
+    font-size: 16px;
+    color: $d-primary-gray;
+
+    &.focused {
+        border: solid 2px $background-blue;
+    }
+}
+
+
+
+/**************TEXT INPUT STYLES*************/
+input[type=text].customInput {
+    // TODO
+}
+
+
+
+/**************EMAIL INPUT STYLES*************/
+input[type=email].customInput {
+    // TODO
+}
+
+
+
+/**************PASSWORD INPUT STYLES*************/
+input[type=password].customInput {
+    // TODO
+}
+
+.inputIcon {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    color: $l-primary-gray;
+
+    &.focusedIcon {
+        color: $background-blue;
+    }
+}
