@@ -1,0 +1,46 @@
+@import 'src/styles/vars/colors';
+
+.loginPageWrapper {
+    padding-top: 5vh;
+    width: 100vw;
+    height: 95vh;
+
+    background-color: $background-blue;
+    background-size: cover;
+}
+
+.loginWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 30vw;
+    padding-top: 30px;
+    padding-bottom: 60px;
+    width: 40vw;
+
+    background-color: $very-light-gray;
+    border-radius: 5px;
+    box-shadow: 3px 3px 5px  $gray;
+}
+
+.loginTitle {
+    font-size: 30px;
+    font-weight: 700;
+    color: $l-primary-dark;
+}
+
+.loginInfoWrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    margin-top: 40px;
+    margin-left: 30vw;
+    padding: 10px 20px;
+    width: calc(40vw - 40px);
+    background-color: $l-primary-white;
+
+    border: solid 2px $info;
+    border-radius: 5px;
+    color: $l-primary-dark;
+}
