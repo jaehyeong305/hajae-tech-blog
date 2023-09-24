@@ -1,0 +1,49 @@
+@import 'src/styles/vars/colors';
+
+.loginForm {
+    text-align: center;
+}
+
+.errorMessage {
+    color: rgb(196, 60, 60);
+    font-size: 16px;
+}
+
+.primaryButton {
+    margin-top: 40px;
+    padding: 10px 20px;
+    cursor: pointer;
+    
+    background-color: $background-blue;
+    border: 0;
+    border-radius: 5px;
+    box-shadow: 2px 2px 3px $gray;
+
+    color: $very-light-gray;
+    font-weight: 500;
+    font-size: 16px;
+
+    &:hover {
+        background-color: $hovered-background-blue;
+    }
+}
+
+.closeButton {
+    margin-top: 40px;
+    margin-left: 20px;
+    padding: 10px 20px;
+    cursor: pointer;
+    
+    background-color: $gray;
+    border: 0;
+    border-radius: 5px;
+    box-shadow: 2px 2px 3px $gray;
+
+    color: $very-light-gray;
+    font-weight: 500;
+    font-size: 16px;
+
+    &:hover {
+        background-color: $l-primary-gray;
+    }
+}
