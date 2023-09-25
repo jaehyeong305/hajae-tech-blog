@@ -13,8 +13,8 @@ const MainPosts: React.FC = () => {
     return (
         <div className={styles.mainPostsWrapper}>
             <div className={styles.tagWrapper}>
-                {PostTags.map(tag => (
-                    <Tag tagName={tag.tagName} isActive={tag.isActive}/>
+                {PostTags.map((tag, index) => (
+                    <Tag key={index} tagName={tag.tagName} isActive={tag.isActive}/>
                 ))}
             </div>
             <div className={styles.postWrapper}>

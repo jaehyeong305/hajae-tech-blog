@@ -1,5 +1,3 @@
-// UserService.java
-
 package com.hajaetechblog.htbbackend.service;
 
 import com.hajaetechblog.htbbackend.model.User;
