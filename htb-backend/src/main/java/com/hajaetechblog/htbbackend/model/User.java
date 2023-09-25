@@ -12,16 +12,18 @@ public class User implements UserDetails {
 
     @Id
     private String id;
-    private String userName;
+    private String name;
+    private String email;
     private String password;
+    private Collection<? extends GrantedAuthority> authorities;
 
-    public User(String userName, String password) {
-        this.userName = userName;
+    public User(String name, String email, String password, Collection<? extends GrantedAuthority> authorities) {
+        this.name = name;
+        this.email = email;
         this.password = password;
+        this.authorities = authorities;
     }
 
-
-    // Getter 및 Setter 메서드
     public String getId() {
         return id;
     }
@@ -32,12 +34,12 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return authorities;
     }
 
     @Override
     public String getUsername() {
-        return userName;
+        return name;
     }
 
     @Override
@@ -60,19 +62,26 @@ public class User implements UserDetails {
         return true;
     }
 
-
-    public String getUserName() {
-        return userName;
+    public String getName() {
+        return name;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail() {
+        this.email = email;
     }
 
     public String getPassword() {
         return password;
     }
-    
+
     public void setPassword(String password) {
         this.password = password;
     }
@@ -81,7 +90,7 @@ public class User implements UserDetails {
     public String toString() {
         return "User{" +
                 "id='" + id + '\'' +
-                ", userName='" + userName + '\'' +
+                ", userName='" + name + '\'' +
                 ", password='" + password + '\'' +
                 '}';
     }

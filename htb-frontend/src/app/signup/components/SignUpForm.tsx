@@ -7,7 +7,11 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from '@hookform/resolvers/yup';
 
-type FormValues = {
+type SignUpFormProps = {
+    onSignUp: SubmitHandler<SignUpFormValues>;
+};
+
+export type SignUpFormValues = {
     name: string;
     email: string;
     password: string;
@@ -19,21 +23,21 @@ const schema = yup.object().shape({
     password: yup.string().required("비밀번호를 입력해주세요").min(8, '비밀번호는 8~14 자리수로 입력해주세요').max(14, '비밀번호는 8~14 자리수로 입력해주세요'),
 });
 
-const SignUpForm: React.FC = () => {
+const SignUpForm: React.FC<SignUpFormProps> = ({ onSignUp }) => {
     const { register, handleSubmit, formState: { errors }, trigger } = useForm({
         resolver: yupResolver(schema),
     });
-
-    const onSubmit: SubmitHandler<FormValues> = (data: FormValues) => {
-        console.log(data);
-    }
     
-    const handleBlurValidation = async (fieldName: keyof FormValues) => {
+    const handleBlurValidation = async (fieldName: keyof SignUpFormValues) => {
         await trigger(fieldName);
     }
 
+    const handleFormSubmit = (formData: SignUpFormValues) => {
+        onSignUp(formData);
+      };
+
     return (
-        <form onSubmit={handleSubmit(onSubmit)} className={styles.signUpForm}>
+        <form onSubmit={handleSubmit(handleFormSubmit)} className={styles.signUpForm}>
             <InputWrapper id="name" type="text">
                 <InputWrapper.Input placeholder="Jaehyeong Ha" {...register("name", { onBlur: () => handleBlurValidation('name')})}  />
             </InputWrapper>
