@@ -4,8 +4,8 @@ import com.hajaetechblog.htbbackend.model.User;
 import com.hajaetechblog.htbbackend.repository.UserRepository;
 import com.hajaetechblog.htbbackend.service.HtbUserDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -56,14 +56,19 @@ public class AuthController {
     @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/signup")
     public ResponseEntity<String> signUp(@RequestBody User user) {
-        // NOTE(hajae): 비밀번호 해싱
-        String hashedPassword = passwordEncoder.encode(user.getPassword());
-        user.setPassword(hashedPassword);
+        try {
+            // NOTE(hajae): 비밀번호 해싱
+            String hashedPassword = passwordEncoder.encode(user.getPassword());
+            user.setPassword(hashedPassword);
 
-        // NOTE(hajae): 사용자 생성
-        userRepository.save(user);
+            // NOTE(hajae): 사용자 생성
+            userRepository.save(user);
 
-        // NOTE(hajae): 회원가입 성공 메시지 반환
-        return ResponseEntity.ok("User registered successfully");
+            // NOTE(hajae): 성공 메시지 반환
+            return ResponseEntity.ok("User registered successfully");
+        } catch (Exception ex) {
+            // TODO(hajae): Error Handling
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to register user: " + ex.getMessage());
+        }
     }
 }

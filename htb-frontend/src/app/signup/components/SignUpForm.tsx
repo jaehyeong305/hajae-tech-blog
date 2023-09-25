@@ -54,7 +54,7 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ onSignUp }) => {
             {errors.password && <p className={styles.errorMessage}>{errors.password.message}</p>}
 
             <button type="submit" className={styles.primaryButton}>Sign Up</button>
-            <button type="submit" className={styles.closeButton}>Back</button>
+            <button type="button" className={styles.closeButton}>Back</button>
         </form>
     )
 }

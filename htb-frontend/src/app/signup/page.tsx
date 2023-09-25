@@ -17,7 +17,12 @@ const signUp = async (name: string, email: string, password: string) => {
     });
 
     if (response.ok) {
-        console.log(response.json());
+        try {
+            const responseText = await response.text();
+            console.log(responseText);
+        } catch (error) {
+            console.error('Error parsing JSON:', error);
+        }
     } else {
         console.error('User registration failed');
     }
