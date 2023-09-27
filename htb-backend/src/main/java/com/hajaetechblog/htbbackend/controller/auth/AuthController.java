@@ -1,55 +1,55 @@
 package com.hajaetechblog.htbbackend.controller.auth;
 
+import com.hajaetechblog.htbbackend.model.LoginRequest;
 import com.hajaetechblog.htbbackend.model.User;
+import com.hajaetechblog.htbbackend.model.UserResponse;
 import com.hajaetechblog.htbbackend.repository.UserRepository;
 import com.hajaetechblog.htbbackend.service.HtbUserDetailService;
+import com.hajaetechblog.htbbackend.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.Map;
-
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/api/auth")
 public class AuthController {
-
     private final UserRepository userRepository;
-    private final HtbUserDetailService htbUserDetailService;
+    private final HtbUserDetailService userDetailService;
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public AuthController(UserRepository userRepository, HtbUserDetailService htbUserDetailService, PasswordEncoder passwordEncoder) {
+    public AuthController(UserRepository userRepository, HtbUserDetailService userDetailService, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
-        this.htbUserDetailService = htbUserDetailService;
+        this.userDetailService = userDetailService;
         this.passwordEncoder = passwordEncoder;
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/login")
-    public Map<String, String> login(@RequestBody User user) {
+    public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest) {
         try {
+            String username = loginRequest.getUsername();
+            String password = loginRequest.getPassword();
+
             // NOTE(hajae): 사용자 메일을 기반으로 사용자 정보를 가져옴
-            User userDetails = htbUserDetailService.loadUserByUsername(user.getUsername());
+            UserDetails userDetails = userDetailService.loadUserByUsername(username);
 
             // NOTE(hajae): 입력된 비밀번호를 해시화하여 UserDetails 객체의 비밀번호와 비교
-            if (new BCryptPasswordEncoder().matches(user.getPassword(), userDetails.getPassword())) {
-                // NOTE(hajae): 토큰을 기반으로 JWT 토큰 생성
-                Map<String, String> response = new HashMap<>();
-                response.put("name", userDetails.getUsername());
-                response.put("email", userDetails.getEmail());
-
-                return response;
+            if (new BCryptPasswordEncoder().matches(password, userDetails.getPassword())) {
+                // NOTE(hajae): JWT Token 생성 후 반환
+                String token = new JwtUtil().generateToken(username);
+                return ResponseEntity.ok(token);
             } else {
                 // 로그인 실패
                 throw new UsernameNotFoundException("Invalid username or password");
             }
         } catch (UsernameNotFoundException e) {
-            throw new UsernameNotFoundException("User not found with username: " + user.getName());
+            throw new UsernameNotFoundException("User not found with username");
         }
     }
 

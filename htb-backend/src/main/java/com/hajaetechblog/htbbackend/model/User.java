@@ -1,5 +1,7 @@
 package com.hajaetechblog.htbbackend.model;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
@@ -7,29 +9,23 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 
+@Getter
+@Setter
 @Document(collection = "users")
 public class User implements UserDetails {
 
     @Id
     private String id;
-    private String name;
+    private String username;
     private String email;
     private String password;
     private Collection<? extends GrantedAuthority> authorities;
 
-    public User(String name, String email, String password, Collection<? extends GrantedAuthority> authorities) {
-        this.name = name;
+    public User(String username, String email, String password, Collection<? extends GrantedAuthority> authorities) {
+        this.username = username;
         this.email = email;
         this.password = password;
         this.authorities = authorities;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     @Override
@@ -39,7 +35,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return name;
+        return username;
     }
 
     @Override
@@ -62,35 +58,11 @@ public class User implements UserDetails {
         return true;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail() {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     @Override
     public String toString() {
         return "User{" +
                 "id='" + id + '\'' +
-                ", userName='" + name + '\'' +
+                ", userName='" + username + '\'' +
                 ", password='" + password + '\'' +
                 '}';
     }

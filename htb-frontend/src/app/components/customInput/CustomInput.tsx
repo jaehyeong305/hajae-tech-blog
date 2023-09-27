@@ -33,7 +33,7 @@ const CustomInput: React.FC = forwardRef(({ ...props }, ref: Ref<HTMLInputElemen
 
     const getIcon = () => {
         switch (id) {
-            case "name":
+            case "username":
                 return "person";
             case "email":
                 return "mail";
