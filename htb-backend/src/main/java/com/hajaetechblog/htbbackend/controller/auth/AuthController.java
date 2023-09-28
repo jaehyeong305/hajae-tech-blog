@@ -2,7 +2,6 @@ package com.hajaetechblog.htbbackend.controller.auth;
 
 import com.hajaetechblog.htbbackend.model.LoginRequest;
 import com.hajaetechblog.htbbackend.model.User;
-import com.hajaetechblog.htbbackend.model.UserResponse;
 import com.hajaetechblog.htbbackend.repository.UserRepository;
 import com.hajaetechblog.htbbackend.service.HtbUserDetailService;
 import com.hajaetechblog.htbbackend.util.JwtUtil;
@@ -22,12 +21,14 @@ public class AuthController {
     private final UserRepository userRepository;
     private final HtbUserDetailService userDetailService;
     private final PasswordEncoder passwordEncoder;
+    private final JwtUtil jwtUtil;
 
     @Autowired
-    public AuthController(UserRepository userRepository, HtbUserDetailService userDetailService, PasswordEncoder passwordEncoder) {
+    public AuthController(UserRepository userRepository, HtbUserDetailService userDetailService, PasswordEncoder passwordEncoder,  JwtUtil jwtUtil) {
         this.userRepository = userRepository;
         this.userDetailService = userDetailService;
         this.passwordEncoder = passwordEncoder;
+        this.jwtUtil = jwtUtil;
     }
 
     @PostMapping("/login")
@@ -42,7 +43,7 @@ public class AuthController {
             // NOTE(hajae): 입력된 비밀번호를 해시화하여 UserDetails 객체의 비밀번호와 비교
             if (new BCryptPasswordEncoder().matches(password, userDetails.getPassword())) {
                 // NOTE(hajae): JWT Token 생성 후 반환
-                String token = new JwtUtil().generateToken(username);
+                String token = this.jwtUtil.generateToken(username);
                 return ResponseEntity.ok(token);
             } else {
                 // 로그인 실패
