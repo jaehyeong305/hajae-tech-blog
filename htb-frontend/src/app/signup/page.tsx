@@ -7,13 +7,13 @@ import styles from './page.module.scss'
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
-const signUp = async (name: string, email: string, password: string) => {
+const signUp = async (username: string, email: string, password: string) => {
     const response = await fetch('http://localhost:8080/api/auth/signup', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ name, email, password }),
+        body: JSON.stringify({ username, email, password }),
     });
 
     if (response.ok) {
@@ -33,7 +33,7 @@ const SignUp: React.FC = () => {
     const [signUpData, setSignUpData] = useState<SignUpFormValues | null>(null);
 
     const handleSignUp: SubmitHandler<SignUpFormValues> = async (data: SignUpFormValues) => {
-      await signUp(data.name, data.email, data.password).then(() => route.push('/'));
+      await signUp(data.username, data.email, data.password).then(() => route.push('/'));
       setSignUpData(data);
     };
 

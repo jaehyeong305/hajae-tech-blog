@@ -1,8 +1,11 @@
 package com.hajaetechblog.htbbackend.controller.auth;
 
-import com.hajaetechblog.htbbackend.model.User;
+import com.hajaetechblog.htbbackend.model.*;
+import com.hajaetechblog.htbbackend.repository.RefreshTokenRepository;
 import com.hajaetechblog.htbbackend.repository.UserRepository;
 import com.hajaetechblog.htbbackend.service.HtbUserDetailService;
+import com.hajaetechblog.htbbackend.util.JwtUtil;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,45 +14,68 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Optional;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/api/auth")
 public class AuthController {
-
     private final UserRepository userRepository;
-    private final HtbUserDetailService htbUserDetailService;
+    private final RefreshTokenRepository refreshTokenRepository;
+    private final HtbUserDetailService userDetailService;
     private final PasswordEncoder passwordEncoder;
+    private final JwtUtil jwtUtil;
 
     @Autowired
-    public AuthController(UserRepository userRepository, HtbUserDetailService htbUserDetailService, PasswordEncoder passwordEncoder) {
+    public AuthController(UserRepository userRepository, HtbUserDetailService userDetailService, PasswordEncoder passwordEncoder,  JwtUtil jwtUtil, RefreshTokenRepository refreshTokenRepository) {
         this.userRepository = userRepository;
-        this.htbUserDetailService = htbUserDetailService;
+        this.refreshTokenRepository = refreshTokenRepository;
+        this.userDetailService = userDetailService;
         this.passwordEncoder = passwordEncoder;
+        this.jwtUtil = jwtUtil;
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/login")
-    public Map<String, String> login(@RequestBody User user) {
+    public ResponseEntity<UserResponse> login(@RequestBody LoginRequest loginRequest, HttpServletResponse response) {
         try {
+            String username = loginRequest.getUsername();
+            String password = loginRequest.getPassword();
+
             // NOTE(hajae): 사용자 메일을 기반으로 사용자 정보를 가져옴
-            User userDetails = htbUserDetailService.loadUserByUsername(user.getUsername());
+            User userDetails = userDetailService.loadUserByUsername(username);
 
             // NOTE(hajae): 입력된 비밀번호를 해시화하여 UserDetails 객체의 비밀번호와 비교
-            if (new BCryptPasswordEncoder().matches(user.getPassword(), userDetails.getPassword())) {
-                // NOTE(hajae): 토큰을 기반으로 JWT 토큰 생성
-                Map<String, String> response = new HashMap<>();
-                response.put("name", userDetails.getUsername());
-                response.put("email", userDetails.getEmail());
+            if (new BCryptPasswordEncoder().matches(password, userDetails.getPassword())) {
+                // NOTE(hajae): JWT Token 생성
+                String accessToken = jwtUtil.generateToken(username, "Access");
+                String refreshToken = jwtUtil.generateToken(username, "Refresh");
 
-                return response;
+                Optional<RefreshToken> refreshTokenOptional = Optional.ofNullable(refreshTokenRepository.findByUsername(username));
+
+                if (refreshTokenOptional.isPresent()) {
+                    RefreshToken existingToken = refreshTokenOptional.get();
+                    existingToken.setRefreshToken(refreshToken);
+                    refreshTokenRepository.save(existingToken);
+                } else {
+                    RefreshToken newRefreshToken = new RefreshToken();
+                    newRefreshToken.setUsername(username);
+                    newRefreshToken.setRefreshToken(refreshToken);
+                    newRefreshToken.setExpiresIn(jwtUtil.getExpirationTimeFromToken(refreshToken));
+                    refreshTokenRepository.save(newRefreshToken);
+                }
+
+                TokenResponse token = new TokenResponse(accessToken, refreshToken);
+
+                jwtUtil.setAccessTokenInHeader(response, token.getAccessToken());
+                jwtUtil.setRefreshTokenInHeader(response, token.getRefreshToken());
+
+                UserResponse userInfo = new UserResponse(userDetails.getUsername(), userDetails.getEmail());
+                return ResponseEntity.ok(userInfo);
             } else {
-                // 로그인 실패
                 throw new UsernameNotFoundException("Invalid username or password");
             }
         } catch (UsernameNotFoundException e) {
-            throw new UsernameNotFoundException("User not found with username: " + user.getName());
+            throw new UsernameNotFoundException("User not found with username");
         }
     }
 
