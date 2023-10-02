@@ -13,6 +13,7 @@ const login = async (username: string, password: string) => {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
+            // 'Authorization': `Bearer ${yourJWTToken}`
         },
         body: JSON.stringify({ username, password }),
     });
