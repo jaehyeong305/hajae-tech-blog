@@ -122,21 +122,21 @@ public class JwtUtil {
 
     // NOTE(hajae): Get access token from header
     public String getAccessTokenFromHeader(HttpServletRequest request) {
-        return request.getHeader("Access_Token");
+        return request.getHeader("Access-Token");
     }
 
     // NOTE(hajae): Access token header 설정
     public void setAccessTokenInHeader(HttpServletResponse response, String accessToken) {
-        response.setHeader("Access_Token", accessToken);
+        response.setHeader("Access-Token", accessToken);
     }
 
     // NOTE(hajae): Get refresh token from header
     public String getRefreshTokenFromHeader(HttpServletRequest request) {
-        return request.getHeader("Refresh_Token");
+        return request.getHeader("Refresh-Token");
     }
 
     // NOTE(hajae): Refresh token header 설정
     public void setRefreshTokenInHeader(HttpServletResponse response, String refreshToken) {
-        response.setHeader("Refresh_Token", refreshToken);
+        response.setHeader("Refresh-Token", refreshToken);
     }
 }

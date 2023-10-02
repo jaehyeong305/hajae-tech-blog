@@ -7,6 +7,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useRouter } from "next/navigation";
+import { saveAuthData } from "@/app/lib/auth";
 
 const login = async (username: string, password: string) => {
     const response = await fetch('http://localhost:8080/api/auth/login', {
@@ -20,14 +21,16 @@ const login = async (username: string, password: string) => {
 
     if (response.ok) {
         try {
-            const data = await response.json(); // JSON 데이터 파싱
-            console.log("response data: ", data);
+            const userInfo = await response.json();
+            saveAuthData(response, userInfo);
         } catch (error) {
             console.error('Error parsing JSON:', error);
         }
     } else {
         console.error('User login failed');
     }
+
+    return response;
 };
 
 type LoginFormValues = {
@@ -51,7 +54,7 @@ const LoginForm: React.FC = () => {
     }
 
     const onLogin: SubmitHandler<LoginFormValues> = async (data: LoginFormValues) => {
-        await login(data.username, data.password).then((res) => router.push('/'));
+        await login(data.username, data.password).then((res: Response) => router.push('/'));
     };
 
     return (
