@@ -7,8 +7,10 @@ import lombok.Setter;
 @Setter
 public class UserResponse {
     private String username;
+    private String email;
 
-    public UserResponse(String username) {
+    public UserResponse(String username, String email) {
         this.username = username;
+        this.email = email;
     }
 }

@@ -1,9 +1,6 @@
 package com.hajaetechblog.htbbackend.controller.auth;
 
-import com.hajaetechblog.htbbackend.model.LoginRequest;
-import com.hajaetechblog.htbbackend.model.RefreshToken;
-import com.hajaetechblog.htbbackend.model.TokenResponse;
-import com.hajaetechblog.htbbackend.model.User;
+import com.hajaetechblog.htbbackend.model.*;
 import com.hajaetechblog.htbbackend.repository.RefreshTokenRepository;
 import com.hajaetechblog.htbbackend.repository.UserRepository;
 import com.hajaetechblog.htbbackend.service.HtbUserDetailService;
@@ -12,7 +9,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -40,13 +36,13 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<TokenResponse> login(@RequestBody LoginRequest loginRequest, HttpServletResponse response) {
+    public ResponseEntity<UserResponse> login(@RequestBody LoginRequest loginRequest, HttpServletResponse response) {
         try {
             String username = loginRequest.getUsername();
             String password = loginRequest.getPassword();
 
             // NOTE(hajae): 사용자 메일을 기반으로 사용자 정보를 가져옴
-            UserDetails userDetails = userDetailService.loadUserByUsername(username);
+            User userDetails = userDetailService.loadUserByUsername(username);
 
             // NOTE(hajae): 입력된 비밀번호를 해시화하여 UserDetails 객체의 비밀번호와 비교
             if (new BCryptPasswordEncoder().matches(password, userDetails.getPassword())) {
@@ -70,10 +66,11 @@ public class AuthController {
 
                 TokenResponse token = new TokenResponse(accessToken, refreshToken);
 
-                response.addHeader("Access_Token", token.getAccessToken());
-                response.addHeader("Refresh_Token", token.getRefreshToken());
+                jwtUtil.setAccessTokenInHeader(response, token.getAccessToken());
+                jwtUtil.setRefreshTokenInHeader(response, token.getRefreshToken());
 
-                return ResponseEntity.ok(token);
+                UserResponse userInfo = new UserResponse(userDetails.getUsername(), userDetails.getEmail());
+                return ResponseEntity.ok(userInfo);
             } else {
                 throw new UsernameNotFoundException("Invalid username or password");
             }
