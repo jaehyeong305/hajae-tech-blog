@@ -2,11 +2,12 @@
   "name": "htb-frontend",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://jaehyeong.com",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "dev": "NODE_ENV=development next dev",
+    "build": "NODE_ENV=production next build",
+    "start": "NODE_ENV=production next start",
+    "lint": "NODE_ENV=development next lint"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.1",
@@ -22,6 +23,5 @@
     "sass": "^1.67.0",
     "typescript": "5.2.2",
     "yup": "^1.2.0"
-  },
-  "proxy": "http://localhost:8080"
+  }
 }

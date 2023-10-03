@@ -13,3 +13,14 @@ export const saveAuthData = (response: Response, userInfo: UserInfo) => {
     localStorage.setItem('refreshToken', refreshToken || '');
     localStorage.setItem('userInfo', JSON.stringify(userInfo));
 }
+
+export const getBaseUrl = () => {
+    switch (process.env.NODE_ENV) {
+        case 'production':
+            return 'http://jaehyeong.com';
+        case 'development':
+            return 'http://localhost:3000';
+        default:
+            return '';
+    }
+}
