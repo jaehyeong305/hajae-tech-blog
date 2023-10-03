@@ -6,9 +6,28 @@ import { InputWrapper } from "@/app/components/customInput/CustomInput";
 import { SubmitHandler, useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 
-type SignUpFormProps = {
-    onSignUp: SubmitHandler<SignUpFormValues>;
+const signUp = async (username: string, email: string, password: string) => {
+    const response = await fetch('http://localhost:8080/api/auth/signup', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, email, password }),
+    });
+
+    if (response.ok) {
+        try {
+            const responseText = await response.text();
+            console.log(responseText);
+        } catch (error) {
+            console.error('Error parsing JSON:', error);
+        }
+    } else {
+        console.error('User registration failed');
+    }
 };
 
 export type SignUpFormValues = {
@@ -23,7 +42,8 @@ const schema = yup.object().shape({
     password: yup.string().required("비밀번호를 입력해주세요").min(8, '비밀번호는 8~14 자리수로 입력해주세요').max(14, '비밀번호는 8~14 자리수로 입력해주세요'),
 });
 
-const SignUpForm: React.FC<SignUpFormProps> = ({ onSignUp }) => {
+const SignUpForm: React.FC = () => {
+    const router = useRouter();
     const { register, handleSubmit, formState: { errors }, trigger } = useForm({
         resolver: yupResolver(schema),
     });
@@ -32,29 +52,31 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ onSignUp }) => {
         await trigger(fieldName);
     }
 
-    const handleFormSubmit = (formData: SignUpFormValues) => {
-        onSignUp(formData);
+    const onSignUp: SubmitHandler<SignUpFormValues> = async (data: SignUpFormValues) => {
+        await signUp(data.username, data.email, data.password).then(() => router.push('/'));
     };
 
     return (
-        <form onSubmit={handleSubmit(handleFormSubmit)} className={styles.signUpForm}>
+        <form onSubmit={handleSubmit(onSignUp)} className={styles.signUpForm}>
             <InputWrapper id="username" type="text">
-                <InputWrapper.Input placeholder="Jaehyeong Ha" {...register("username", { onBlur: () => handleBlurValidation('username') })} />
+                <InputWrapper.Input {...register("username", { onBlur: () => handleBlurValidation('username') })} />
             </InputWrapper>
             {errors.username && <p className={styles.errorMessage}>{errors.username.message}</p>}
 
             <InputWrapper id="email" type="email">
-                <InputWrapper.Input placeholder="example@example.com" {...register("email", { onBlur: () => handleBlurValidation('email') })} />
+                <InputWrapper.Input {...register("email", { onBlur: () => handleBlurValidation('email') })} />
             </InputWrapper>
             {errors.email && <p className={styles.errorMessage}>{errors.email.message}</p>}
 
             <InputWrapper id="password" type="password">
-                <InputWrapper.Input placeholder="Password" {...register("password", { onBlur: () => handleBlurValidation('password') })} />
+                <InputWrapper.Input {...register("password", { onBlur: () => handleBlurValidation('password') })} />
             </InputWrapper>
             {errors.password && <p className={styles.errorMessage}>{errors.password.message}</p>}
 
             <button type="submit" className={styles.primaryButton}>Sign Up</button>
-            <button type="button" className={styles.closeButton}>Back</button>
+            <Link href='/'>
+                <button type="button" className={styles.closeButton}>Back</button>
+            </Link>
         </form>
     )
 }

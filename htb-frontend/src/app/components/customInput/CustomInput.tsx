@@ -42,6 +42,17 @@ const CustomInput: React.FC = forwardRef(({ ...props }, ref: Ref<HTMLInputElemen
         }
     }
 
+    const getPlaceholder = () => {
+        switch (id) {
+            case "username":
+                return "Jaehyeong Ha";
+            case "email":
+                return "example@example.com";
+            case "password":
+                return "Password"
+        }
+    }
+
     return (
         <div className={styles.inputField}>
             <input
@@ -51,6 +62,7 @@ const CustomInput: React.FC = forwardRef(({ ...props }, ref: Ref<HTMLInputElemen
                 onFocus={handleFocus}
                 onBlur={handleBlur}
                 ref={ref}
+                placeholder={getPlaceholder()}
                 {...props}
             />
             <span className={`${styles.inputIcon} material-symbols-rounded ${isFocused ? styles.focusedIcon : ''} `}>

@@ -8,13 +8,13 @@ import * as yup from "yup";
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useRouter } from "next/navigation";
 import { saveAuthData } from "@/app/lib/auth";
+import Link from "next/link";
 
 const login = async (username: string, password: string) => {
     const response = await fetch('http://localhost:8080/api/auth/login', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            // 'Authorization': `Bearer ${yourJWTToken}`
         },
         body: JSON.stringify({ username, password }),
     });
@@ -54,23 +54,25 @@ const LoginForm: React.FC = () => {
     }
 
     const onLogin: SubmitHandler<LoginFormValues> = async (data: LoginFormValues) => {
-        await login(data.username, data.password).then((res: Response) => router.push('/'));
+        await login(data.username, data.password).then(() => router.push('/'));
     };
 
     return (
         <form onSubmit={handleSubmit(onLogin)} className={styles.loginForm} action="/api/auth/login">
             <InputWrapper id="username" type="text">
-                <InputWrapper.Input placeholder="Jaehyeong Ha" {...register("username", { onBlur: () => handleBlurValidation('username') })} />
+                <InputWrapper.Input {...register("username", { onBlur: () => handleBlurValidation('username') })} />
             </InputWrapper>
             {errors.username && <p className={styles.errorMessage}>{errors.username.message}</p>}
 
             <InputWrapper id="password" type="password">
-                <InputWrapper.Input placeholder="Password" {...register("password", { onBlur: () => handleBlurValidation('password') })} />
+                <InputWrapper.Input {...register("password", { onBlur: () => handleBlurValidation('password') })} />
             </InputWrapper>
             {errors.password && <p className={styles.errorMessage}>{errors.password.message}</p>}
 
             <button type="submit" className={styles.primaryButton}>Login</button>
-            <button type="button" className={styles.closeButton}>Back</button>
+            <Link href='/'>
+                <button type="button" className={styles.closeButton}>Back</button>
+            </Link>
         </form>
     )
 }
