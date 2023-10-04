@@ -1,8 +1,10 @@
 package com.hajaetechblog.htbbackend.repository;
 
 import com.hajaetechblog.htbbackend.model.User;
-import org.springframework.data.mongodb.repository.MongoRepository;
+import org.socialsignin.spring.data.dynamodb.repository.EnableScan;
+import org.springframework.data.repository.CrudRepository;
 
-public interface UserRepository extends MongoRepository<User, String> {
+@EnableScan
+public interface UserRepository extends CrudRepository<User, String> {
     User findByUsername(String username);
 }

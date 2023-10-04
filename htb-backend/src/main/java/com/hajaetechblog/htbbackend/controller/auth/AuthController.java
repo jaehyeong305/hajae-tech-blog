@@ -4,6 +4,7 @@ import com.hajaetechblog.htbbackend.model.*;
 import com.hajaetechblog.htbbackend.repository.RefreshTokenRepository;
 import com.hajaetechblog.htbbackend.repository.UserRepository;
 import com.hajaetechblog.htbbackend.service.HtbUserDetailService;
+import com.hajaetechblog.htbbackend.service.UserService;
 import com.hajaetechblog.htbbackend.util.JwtUtil;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,18 +21,16 @@ import java.util.Optional;
 @CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/api/auth")
 public class AuthController {
-    private final UserRepository userRepository;
+    private final UserService userService;
     private final RefreshTokenRepository refreshTokenRepository;
     private final HtbUserDetailService userDetailService;
-    private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
 
     @Autowired
-    public AuthController(UserRepository userRepository, HtbUserDetailService userDetailService, PasswordEncoder passwordEncoder,  JwtUtil jwtUtil, RefreshTokenRepository refreshTokenRepository) {
-        this.userRepository = userRepository;
+    public AuthController(UserService userService, HtbUserDetailService userDetailService, JwtUtil jwtUtil, RefreshTokenRepository refreshTokenRepository) {
+        this.userService = userService;
         this.refreshTokenRepository = refreshTokenRepository;
         this.userDetailService = userDetailService;
-        this.passwordEncoder = passwordEncoder;
         this.jwtUtil = jwtUtil;
     }
 
@@ -41,7 +40,7 @@ public class AuthController {
             String username = loginRequest.getUsername();
             String password = loginRequest.getPassword();
 
-            // NOTE(hajae): 사용자 메일을 기반으로 사용자 정보를 가져옴
+            // NOTE(hajae): 사용자 이름을 기반으로 사용자 정보를 가져옴
             User userDetails = userDetailService.loadUserByUsername(username);
 
             // NOTE(hajae): 입력된 비밀번호를 해시화하여 UserDetails 객체의 비밀번호와 비교
@@ -83,12 +82,8 @@ public class AuthController {
     @PostMapping("/signup")
     public ResponseEntity<String> signUp(@RequestBody User user) {
         try {
-            // NOTE(hajae): 비밀번호 해싱
-            String hashedPassword = passwordEncoder.encode(user.getPassword());
-            user.setPassword(hashedPassword);
-
             // NOTE(hajae): 사용자 생성
-            userRepository.save(user);
+            userService.createUser(user);
 
             // NOTE(hajae): 성공 메시지 반환
             return ResponseEntity.ok("User registered successfully");

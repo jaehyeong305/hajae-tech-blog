@@ -4,15 +4,14 @@ import com.hajaetechblog.htbbackend.model.User;
 import com.hajaetechblog.htbbackend.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.socialsignin.spring.data.dynamodb.repository.EnableScan;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
+@EnableScan
 public class HtbUserDetailService implements UserDetailsService {
 
     private static final Logger logger = LoggerFactory.getLogger(HtbUserDetailService.class);
@@ -28,9 +27,10 @@ public class HtbUserDetailService implements UserDetailsService {
     @Override
     public User loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username);
+
         if (user == null) {
             throw new UsernameNotFoundException("User not found with userName: " + username);
         }
-        return new User(user.getUsername(), user.getEmail(), user.getPassword(), List.of(new SimpleGrantedAuthority("USER")));
+        return user;
     }
 }

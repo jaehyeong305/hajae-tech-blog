@@ -19,7 +19,7 @@ export const getBaseUrl = () => {
         case 'production':
             return 'http://jaehyeong.com';
         case 'development':
-            return 'http://localhost:3000';
+            return 'http://localhost:8080';
         default:
             return '';
     }
