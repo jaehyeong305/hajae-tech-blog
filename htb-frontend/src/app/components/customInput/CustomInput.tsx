@@ -1,6 +1,6 @@
 'use client'
 
-import React, { Ref, forwardRef } from "react";
+import React, { Ref } from "react";
 import styles from "./CustomInput.module.scss"
 
 const InputContext = React.createContext({
@@ -19,7 +19,7 @@ export const InputWrapper = (
     )
 };
 
-const CustomInput: React.FC = forwardRef(({ ...props }, ref: Ref<HTMLInputElement>) => {
+const CustomInput = React.forwardRef<HTMLInputElement, {}>((props, ref: Ref<HTMLInputElement>) => {
     const { id, type } = React.useContext(InputContext);
     const [isFocused, setIsFocused] = React.useState(false);
 
@@ -82,4 +82,5 @@ const CustomLabel: React.FC<{ children: React.ReactNode }> = ({ children, ...pro
 }
 
 InputWrapper.Input = CustomInput;
+CustomInput.displayName = "Input";
 InputWrapper.Label = CustomLabel;

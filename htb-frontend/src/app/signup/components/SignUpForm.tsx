@@ -8,9 +8,10 @@ import * as yup from "yup";
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { getBaseUrl } from "@/app/lib/auth";
 
 const signUp = async (username: string, email: string, password: string) => {
-    const response = await fetch('http://localhost:8080/api/auth/signup', {
+    const response = await fetch(`${getBaseUrl()}/api/auth/signup`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

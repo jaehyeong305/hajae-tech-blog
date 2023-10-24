@@ -1,5 +1,5 @@
 import Icon from '../components/icon/Icon';
-import SignUpForm, { SignUpFormValues } from './components/SignUpForm';
+import SignUpForm from './components/SignUpForm';
 import styles from './page.module.scss'
 
 const SignUp: React.FC = () => {

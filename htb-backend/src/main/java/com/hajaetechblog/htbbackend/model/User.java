@@ -1,9 +1,11 @@
 package com.hajaetechblog.htbbackend.model;
 
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBIgnore;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -11,22 +13,20 @@ import java.util.Collection;
 
 @Getter
 @Setter
-@Document(collection = "users")
+@DynamoDBTable(tableName = "Users")
 public class User implements UserDetails {
-
-    @Id
+    @DynamoDBHashKey
     private String id;
+    @DynamoDBAttribute
     private String username;
+    @DynamoDBAttribute
     private String email;
+    @DynamoDBAttribute
     private String password;
+    @DynamoDBIgnore
     private Collection<? extends GrantedAuthority> authorities;
 
-    public User(String username, String email, String password, Collection<? extends GrantedAuthority> authorities) {
-        this.username = username;
-        this.email = email;
-        this.password = password;
-        this.authorities = authorities;
-    }
+    public User() {}
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -34,26 +34,25 @@ public class User implements UserDetails {
     }
 
     @Override
-    public String getUsername() {
-        return username;
-    }
-
-    @Override
+    @DynamoDBIgnore
     public boolean isAccountNonExpired() {
         return true;
     }
 
     @Override
+    @DynamoDBIgnore
     public boolean isAccountNonLocked() {
         return true;
     }
 
     @Override
+    @DynamoDBIgnore
     public boolean isCredentialsNonExpired() {
         return true;
     }
 
     @Override
+    @DynamoDBIgnore
     public boolean isEnabled() {
         return true;
     }
