@@ -5,11 +5,11 @@ import hajaeMoon from '../../../public/images/hajae-moon.png'
 import rocketIcon from '../../../public/images/rocket-icon.png'
 import TypewriterText from './components/TypewriterText'
 import AboutMe from "@/app/portfolio/components/aboutMe/AboutMe";
+import Challenge from "@/app/portfolio/components/challenge/Challenge";
 
 const NUM_STARS = 50;
 
 const Portfolio: React.FC = () => {
-    const [scrollY, setScrollY] = useState(0);
     const [stars, setStars] = useState<JSX.Element[]>([]);
 
     useEffect(() => {
@@ -30,18 +30,7 @@ const Portfolio: React.FC = () => {
         setStars(generatedStars);
     }, []);
 
-    const handleScroll = () => {
-        setScrollY(window.scrollY);
-    };
 
-    useEffect(() => {
-        
-        window.addEventListener('scroll', handleScroll);
-        
-        return () => {
-            window.removeEventListener('scroll', handleScroll);
-        };
-    }, []);
     
 
     return (
@@ -60,6 +49,7 @@ const Portfolio: React.FC = () => {
                 </div>
             </div>
             <AboutMe />
+            <Challenge />
         </div>
     );
 }
