@@ -1,0 +1,142 @@
+.portfolioPageWrapper {
+    width: 100%;
+    overflow: hidden;
+}
+
+.protfolioWrapper {
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    background-color: #232D3F;
+}
+
+.protfolioMoonWrapper {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.protfolioMoon {
+    position: absolute;
+    width: 35rem;
+    height: 35rem;
+    border-radius: 50%;
+    box-shadow: 0 0 50px rgba(#f5ffc9, 0.5);
+    background-color: #faffe3;
+    opacity: 1;
+    animation: toTransparent 5s forwards;
+    animation-delay: 5s;
+}
+
+.protfolioHajaeMoon {
+    position: absolute;
+    width: 35rem;
+    height: 35rem;
+    border-radius: 50%;
+    background-size: cover;
+    box-shadow: 0 0 50px rgba(#f5ffc9, 0.5);
+}
+
+@keyframes toTransparent {
+    0% {
+        background-color: #faffe3;
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.7;
+    }
+    100% {
+        background-color: transparent;
+        opacity: 0;
+    }
+}
+
+.star {
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    background-color: #ffffff;
+    clip-path: polygon(50% 0%, 61.8% 38.2%, 100% 38.2%, 70.9% 61.8%, 82.1% 100%, 50% 77.3%, 17.9% 100%, 29.1% 61.8%, 0% 38.2%, 38.2% 38.2%);
+    animation: blink 1s infinite;
+}
+
+.rocket {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    animation: rocketAnimation 3s linear forwards;
+}
+
+@keyframes rocketAnimation {
+    0% {
+        left: 80%;
+        top: 100%;
+    }
+    100% {
+        left: -20%;
+        top: -20%;
+    }
+}
+
+.textWrapper {
+    position: absolute;
+    top: 15vh;
+    width: 100%;
+    
+    text-align: center;
+    font-weight: 900;
+    line-height: 7rem;
+    white-space: nowrap;
+}
+
+.typingText {
+    font-size: 5rem;
+    font-weight: 900;
+    color: #F05454;
+    word-break: break-all;
+    white-space:pre-wrap;
+    
+    z-index: 1;
+}
+
+.textBlink {
+    animation: textBlink 1s step-end infinite;
+}
+
+@keyframes blink {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes textBlink {
+    0%, 100% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+}
+
+.aboutMeWrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.aboutMe {
+    position: relative;
+    display: flex;
+    margin-top: 100vh;
+    background-color: white;
+    width: 90vw;
+    height: 100vh;
+    border-radius: 10px;
+}
