@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import hajaeMoon from '../../../public/images/hajae-moon.png'
 import rocketIcon from '../../../public/images/rocket-icon.png'
 import TypewriterText from './components/TypewriterText'
+import AboutMe from "@/app/portfolio/components/aboutMe/AboutMe";
 
 const NUM_STARS = 50;
 
@@ -42,6 +43,7 @@ const Portfolio: React.FC = () => {
         };
     }, []);
     
+
     return (
         <div className={styles.portfolioPageWrapper}>
             <div className={styles.protfolioWrapper}>
@@ -57,11 +59,7 @@ const Portfolio: React.FC = () => {
                     <TypewriterText text={"Ha Jaehyeong's \nFrontend Portfolio !"} />
                 </div>
             </div>
-            <div className={styles.aboutMeWrapper}>
-                <div className={styles.aboutMe}>
-                    
-                </div>
-            </div>
+            <AboutMe />
         </div>
     );
 }
