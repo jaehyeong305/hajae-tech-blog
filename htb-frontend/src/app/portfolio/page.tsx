@@ -6,7 +6,10 @@ import rocketIcon from '../../../public/images/rocket-icon.png'
 import TypewriterText from './components/TypewriterText'
 import AboutMe from "@/app/portfolio/components/aboutMe/AboutMe";
 import Challenge from "@/app/portfolio/components/challenge/Challenge";
+import Project from "@/app/portfolio/components/project/Project";
+import {Black_Ops_One} from 'next/font/google';
 
+const blackOpsOne = Black_Ops_One({ weight: '400', subsets: ['latin'] });
 const NUM_STARS = 50;
 
 const Portfolio: React.FC = () => {
@@ -35,7 +38,7 @@ const Portfolio: React.FC = () => {
 
     return (
         <div className={styles.portfolioPageWrapper}>
-            <div className={styles.protfolioWrapper}>
+            <div className={`${styles.protfolioWrapper} ${blackOpsOne.className}`}>
                 <div>
                     {stars}
                 </div>
@@ -50,6 +53,7 @@ const Portfolio: React.FC = () => {
             </div>
             <AboutMe />
             <Challenge />
+            <Project />
         </div>
     );
 }

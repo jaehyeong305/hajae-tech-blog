@@ -1,7 +1,7 @@
 import '../styles/globals/globals.scss'
 import './components/main/Main.module.scss'
 import type { Metadata } from 'next'
-import { Varela_Round } from 'next/font/google'
+import {Varela_Round} from 'next/font/google'
 
 const varelaRound = Varela_Round({ weight: '400', subsets: ['latin'] });
 

@@ -17,8 +17,6 @@ const Challenge: React.FC = () => {
             if (!mainChallenge) return;
             const mainChallengePosition = mainChallenge.getBoundingClientRect().top;
 
-            console.log(mainChallengePosition);
-
             // NOTE(hajae): 해당 컴포넌트가 스크롤 되었을 때, 해당 이미지를 화면에 고정한다.
             if (mainChallengePosition <= 0 && mainChallengePosition >= -1750) {
                 setIsImageFixed(true);

@@ -3,6 +3,9 @@ import styles from '../../page.module.scss'
 import React from 'react';
 import hajae from '../../../../../public/images/hajae.png'
 import Icon from "@/app/components/icon/Icon";
+import { Black_Ops_One } from 'next/font/google';
+
+const blackOpsOne = Black_Ops_One({ weight: '400', subsets: ['latin'] });
 
 const AboutMe: React.FC = () => {
     const iconStyle = {fontSize: '30px', marginTop: '0', marginRight: '5px', color: '#393E46'};
@@ -18,7 +21,7 @@ const AboutMe: React.FC = () => {
                         <span><Icon iconName='mail' iconCustomStyle={iconStyle}/>hajae305@gamil.com</span>
                     </div>
                     <div className={styles.aboutmeInfo}>
-                        <span className={styles.aboutMeTitle}>About Me</span>
+                        <span className={`${styles.aboutMeTitle} ${blackOpsOne.className}`}>About Me</span>
                         <span>
                             커뮤니케이션의 중요성을 아는 프론트엔드 개발자. <br/><br/>
                             일본 기업에서 Sprint 단위로 개발을 진행하면서 PM, 디자이너, CS와 많은 소통을 하며 커뮤니케이션을 중요성을 배웠고
@@ -26,7 +29,7 @@ const AboutMe: React.FC = () => {
                             일본에서 4년 1개월의 경험을 쌓고 이제는 한국에서의 새로운 도전을 위해 귀국했습니다.
                         </span>
                         
-                        <span className={styles.aboutMeTitle}>Career</span>
+                        <span className={`${styles.aboutMeTitle} ${blackOpsOne.className}`}>Career</span>
                         <span>
                             <table>
                                 <tbody>
@@ -41,7 +44,7 @@ const AboutMe: React.FC = () => {
                                 </tbody>
                             </table>
                         </span>
-                        <span className={styles.aboutMeTitle}>Skills</span>
+                        <span className={`${styles.aboutMeTitle} ${blackOpsOne.className}`}>Skills</span>
                         <div className={styles.skills}>
                             <div className={styles.skill}>
                                 <span>Typescript</span>
