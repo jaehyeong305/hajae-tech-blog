@@ -38,7 +38,7 @@ const Award: React.FC = () => {
                 const awardPosition = award.getBoundingClientRect().top;
 
                 // NOTE(hajae): 해당 컴포넌트가 스크롤 되었을 때, 폭죽효과를 실행한다.
-                if (awardPosition < -250 && awardPosition > -265) {
+                if (awardPosition < -250 && awardPosition > -280) {
                     firework();
                 }
             };

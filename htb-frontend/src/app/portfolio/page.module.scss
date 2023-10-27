@@ -579,11 +579,11 @@
 
     background-color: #CBF1F5;
     padding-top: 50vh;
-    height: 100vh;
+    height: 150vh;
 
     .awardMainTitle {
         display: flex;
-        justify-content: center;
+        justifycontent: center;
 
         margin-bottom: 50px;
         font-size: 4rem;
@@ -610,5 +610,70 @@
         font-size: 1.5rem;
         color: #22577E;
         text-shadow: 1px 1px 1px #ffffff;
+    }
+}
+
+/********** Core Competency part ***********/
+.coreCompetencyWrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    background: linear-gradient(to bottom, #1363DF, #47B5FF);
+    padding-top: 20vh;
+    height: 150vh;
+
+    .ship {
+        position: absolute;
+        top: 10vh;
+        left: -20px;
+        width: 200px;
+        height: 200px;
+    }
+
+    .lights {
+        position: absolute;
+        width: 5px;
+        height: 5px;
+        background-color: #ffffff;
+        animation: blink 1s infinite;
+    }
+
+    .coreCompetencyMainTitle {
+        margin-bottom: 50px;
+        font-size: 4rem;
+        font-weight: 900;
+        color: #FF6D60;
+    }
+
+    .coreCompetencyBox {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 30px;
+        padding: 50px 80px;
+        width: 70vw;
+        background-color: rgba(#ffffff, 0.2);
+        border-radius: 10px;
+
+        transform: translateX(50%);
+        opacity: 0;
+        transition: transform 2s, opacity 1s;
+
+        &.animated {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        .coreCompetencyTitle {
+            font-size: 2rem;
+            color: #06283D;
+        }
+
+        .coreCompetencyDescription {
+            font-size: 1.5rem;
+            color: #DFF6FF;
+        }
     }
 }

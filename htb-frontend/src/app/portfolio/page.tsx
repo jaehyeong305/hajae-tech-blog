@@ -9,6 +9,7 @@ import Challenge from "@/app/portfolio/components/challenge/Challenge";
 import Project from "@/app/portfolio/components/project/Project";
 import {Black_Ops_One} from 'next/font/google';
 import Award from "@/app/portfolio/components/award/Award";
+import CoreCompetency from './components/coreCompetency/CoreCompetency';
 
 const blackOpsOne = Black_Ops_One({ weight: '400', subsets: ['latin'] });
 const NUM_STARS = 50;
@@ -34,9 +35,6 @@ const Portfolio: React.FC = () => {
         setStars(generatedStars);
     }, []);
 
-
-    
-
     return (
         <div className={styles.portfolioPageWrapper}>
             <div className={`${styles.protfolioWrapper} ${blackOpsOne.className}`}>
@@ -56,6 +54,7 @@ const Portfolio: React.FC = () => {
             <Challenge />
             <Project />
             <Award />
+            <CoreCompetency />
         </div>
     );
 }
