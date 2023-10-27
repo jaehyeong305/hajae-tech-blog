@@ -3,7 +3,7 @@ import styles from '../../page.module.scss'
 import React, { useEffect } from "react";
 import Icon from "@/app/components/icon/Icon";
 import { Black_Ops_One, Do_Hyeon } from 'next/font/google';
-import confetti from 'canvas-confetti';
+import confetti from "canvas-confetti";
 import award from '../../../../../public/images/award.png'
 
 const blackOpsOne = Black_Ops_One({ weight: '400', subsets: ['latin'] });
