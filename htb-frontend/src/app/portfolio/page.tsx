@@ -10,6 +10,7 @@ import Project from "@/app/portfolio/components/project/Project";
 import {Black_Ops_One} from 'next/font/google';
 import Award from "@/app/portfolio/components/award/Award";
 import CoreCompetency from './components/coreCompetency/CoreCompetency';
+import Footer from "@/app/portfolio/components/footer/Footer";
 
 const blackOpsOne = Black_Ops_One({ weight: '400', subsets: ['latin'] });
 const NUM_STARS = 50;
@@ -55,6 +56,7 @@ const Portfolio: React.FC = () => {
             <Project />
             <Award />
             <CoreCompetency />
+            <Footer />
         </div>
     );
 }
