@@ -8,6 +8,7 @@ import AboutMe from "@/app/portfolio/components/aboutMe/AboutMe";
 import Challenge from "@/app/portfolio/components/challenge/Challenge";
 import Project from "@/app/portfolio/components/project/Project";
 import {Black_Ops_One} from 'next/font/google';
+import Award from "@/app/portfolio/components/award/Award";
 
 const blackOpsOne = Black_Ops_One({ weight: '400', subsets: ['latin'] });
 const NUM_STARS = 50;
@@ -54,6 +55,7 @@ const Portfolio: React.FC = () => {
             <AboutMe />
             <Challenge />
             <Project />
+            <Award />
         </div>
     );
 }

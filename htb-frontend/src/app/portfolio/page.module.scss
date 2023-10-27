@@ -569,3 +569,46 @@
         }
     }
 }
+
+/********** Award part ***********/
+.awardWrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    background-color: #CBF1F5;
+    padding-top: 50vh;
+    height: 100vh;
+
+    .awardMainTitle {
+        display: flex;
+        justify-content: center;
+
+        margin-bottom: 50px;
+        font-size: 4rem;
+        font-weight: 900;
+        color: #FF6D60;
+    }
+
+    > img {
+        margin-top: 20px;
+        width: 60vw;
+        border-radius: 10px;
+        box-shadow: 0 5px 10px #aaaaaa;
+    }
+
+    .awardTitle {
+        margin-top: 50px;
+        font-size: 2rem;
+        color: #F7D060;
+        text-shadow: 1px 1px 1px #ffffff;
+    }
+
+    .awardDescription {
+        margin-top: 20px;
+        font-size: 1.5rem;
+        color: #22577E;
+        text-shadow: 1px 1px 1px #ffffff;
+    }
+}
