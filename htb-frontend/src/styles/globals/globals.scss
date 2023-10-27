@@ -4,4 +4,10 @@
 body {
     margin: 0;
     background-color: $l-primary-white;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+body::-webkit-scrollbar {
+    display: none;
 }
