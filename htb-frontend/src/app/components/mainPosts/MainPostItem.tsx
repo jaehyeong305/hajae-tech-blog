@@ -1,3 +1,4 @@
+import { TempPostsLeft, TempPostsRight } from '@/app/constants';
 import styles from './MainPosts.module.scss'
 import PostItem from './PostItem';
 
@@ -5,10 +6,14 @@ const MainPostItem: React.FC = () => {
     return (
         <div className={styles.posts}>
             <div className={styles.postItemLeft}>
-                <PostItem />
+                {TempPostsLeft.map(post => (
+                    <PostItem key={post.postId} postItem={post}/>
+                ))}
             </div>
             <div className={styles.postItemRight}>
-                <PostItem />
+                {TempPostsRight.map(post => (
+                    <PostItem key={post.postId} postItem={post}/>
+                ))}
             </div>
         </div>
     )

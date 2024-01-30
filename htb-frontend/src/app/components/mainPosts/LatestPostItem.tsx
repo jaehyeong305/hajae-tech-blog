@@ -1,17 +1,42 @@
+import Image from 'next/image';
 import Tag from '../tag/Tag';
 import styles from './MainPosts.module.scss'
 
-const LatestPostItem: React.FC = () => {
+type PostItem = {
+    postId: string,
+    postTitle: string,
+    postBody: string,
+    postMainImage: string,
+    createdBy: string,
+    createdAt: Date, // November 16, 2023
+    postTags: string[],
+    comments: Comment[],
+}
+
+type Comment = {
+    message: string,
+    commentedBy: string,
+    commentedAt: Date,
+}
+
+type LatestPostItemProps = {
+    latestPostItem: PostItem
+}
+
+const LatestPostItem: React.FC<LatestPostItemProps> = ({ latestPostItem }) => {
     return (
         <div className={styles.latestPostItemWrapper}>
-            <div className={styles.latestPostItemImage} style={{ backgroundImage: "url('/images/main-bgi5.jpg')" }}>
+            <div className={styles.latestPostItemImage}>
+                <Image src={latestPostItem.postMainImage} alt="" width={130} height={130}/>
             </div>
             <div className={styles.latestPostItemBody}>
-                <span className={styles.latestPostItemBodyTitle}>Next.js 그래서 왜 씀?</span>
-                <span className={styles.latestPostItemBodyDescription}>안녕하세요 하재형입니다. 왜쓰냐면 에이치티엠엘 랜더링을 잘해서 씀ㅋ 이하 생략안녕하세요 하재형입니다. 왜쓰냐면 에이치티엠엘 랜더링을 잘해서 씀ㅋ 이하 생략</span>
-                <span className={styles.latestPostItemWriter}>by jaehyeong.ha</span>
+                <span className={styles.latestPostItemBodyTitle}>{latestPostItem.postTitle}</span>
+                <span className={styles.latestPostItemBodyDescription}>{latestPostItem.postBody}</span>
+                <span className={styles.latestPostItemWriter}>by {latestPostItem.createdBy}</span>
                 <div className={styles.latestPostItemTags}>
-                    <Tag size='s' tagName='Next.js' />
+                    {latestPostItem.postTags.map((tag, index) => (
+                        <Tag key={index} tagName={tag} />
+                    ))}
                 </div>
             </div>
         </div>

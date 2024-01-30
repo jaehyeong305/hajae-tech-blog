@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "NODE_ENV=development next dev",
     "build": "NODE_ENV=production next build",
-    "start": "NODE_ENV=production next start -p 80",
+    "start": "NODE_ENV=production next start",
     "lint": "NODE_ENV=development next lint"
   },
   "dependencies": {

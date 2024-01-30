@@ -2,26 +2,49 @@ import Icon from '../icon/Icon';
 import Tag from '../tag/Tag';
 import styles from './MainPosts.module.scss'
 
-const PostItem: React.FC = () => {
+type PostItem = {
+    postId: string,
+    postTitle: string,
+    postBody: string,
+    postMainImage: string,
+    createdBy: string,
+    createdAt: Date, // November 16, 2023
+    postTags: string[],
+    comments: Comment[],
+}
+
+type Comment = {
+    message: string,
+    commentedBy: string,
+    commentedAt: Date,
+}
+
+type PostItemProps = {
+    postItem: PostItem
+}
+
+const PostItem: React.FC<PostItemProps> = ({ postItem }) => {
     return (
         <div className={styles.postItemWrapper}>
             <div className={styles.postImage}>
-                <img src={'/images/main-bgi5.jpg'} alt="" />
+                <img src={postItem.postMainImage} alt="" />
             </div>
             <div className={styles.postItem}>
                 <div className={styles.createdInfo}>
-                    <span>by jaehyeong.ha</span><span>November 16, 2023</span>
+                    <span>by {postItem.createdBy}</span><span>{postItem.createdAt.toDateString()}</span>
                 </div>
-                <span className={styles.itemTitle}>Next.js 그래서 왜 씀?</span>
-                <span className={styles.itemBody}>안녕하세요 하재형입니다. 왜쓰냐면 에이치티엠엘 랜더링을 잘해서 씀ㅋ 이하 생략</span>
+                <span className={styles.itemTitle}>{postItem.postTitle}</span>
+                <span className={styles.itemBody}>{postItem.postBody}</span>
                 <div className={styles.itemComment}>
                     <div className={styles.commentBox}>
                         <Icon iconName='chat_bubble' iconCustomStyle={{fontSize: '18px'}}/>
-                        <span>0</span>
+                        <span>{postItem.comments.length}</span>
                     </div>
                 </div>
                 <div className={styles.itemTags}>
-                    <Tag tagName="Next.js" />
+                    {postItem.postTags.map((tag, index) => (
+                        <Tag key={index} tagName={tag} />
+                    ))}
                 </div>
             </div>
         </div >
